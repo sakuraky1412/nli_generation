@@ -24,7 +24,7 @@ if __name__ == "__main__":
     a_hidden_size = 150
     beam_size = 1
     batch_size = 64
-    gen_epochs = 20
+    gen_epochs = 10
     div_per_premise = 64
     div_samples = 32
     augment_file_size = 2 ** 15
@@ -33,7 +33,7 @@ if __name__ == "__main__":
     epoch_size = (len(train[0]) / batch_size) * batch_size
     dev_sample_size = (len(dev[0]) / batch_size) * batch_size
 
-    dir_name = 'models/real' + str(version) + '-' + str(g_hidden_size) + '-' + str(latent_size)
+    dir_name = 'models/052301' + str(version) + '-' + str(g_hidden_size) + '-' + str(latent_size)
     
     orig_cmodel_dir = 'models/cmodel/'
     cmodel = cm.attention_model(c_hidden_size, glove)
@@ -47,6 +47,7 @@ if __name__ == "__main__":
         gtrain = gm.gen_train(len(train[0]), g_hidden_size, latent_size, glove, hypo_len, version)
         ga.train(train, dev, gtrain, dir_name, batch_size, glove, beam_size, 
                epoch_size, dev_sample_size, cmodel, gen_epochs)
+        print 'here'
 
     if method == 'augment':
         gtrain = gm.gen_train(len(train[0]), g_hidden_size, latent_size, glove, hypo_len, version)
