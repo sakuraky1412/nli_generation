@@ -346,6 +346,7 @@ def main():
     # train, dev, test = pickle.load(pickle_in)
 
     glove = import_glove('data/snli_vectors_052301.txt')
+
     # glove = import_glove('data/original_snli_vectors.txt')
 
     prem_len = 25
