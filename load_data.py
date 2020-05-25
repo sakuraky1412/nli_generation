@@ -348,6 +348,7 @@ def main():
     glove = import_glove('data/snli_vectors_052301.txt')
 
     # glove = import_glove('data/original_snli_vectors.txt')
+    load_word_vec('null', glove)
 
     prem_len = 25
     hypo_len = 15
