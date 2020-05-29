@@ -10,7 +10,7 @@ from keras.preprocessing.sequence import pad_sequences
 
 DELIMITER = "--"
 # LABEL_LIST = ['neutral','contradiction','entailment']
-LABEL_LIST = ['neutral','larger', 'smaller']
+LABEL_LIST = ['neutral','logic','quantity']
 
 def import_glove(filename, filter_set = None):
     word_map = dict()
@@ -341,11 +341,11 @@ def main():
     # train, dev, test = load_all_snli_datasets('data/snli_1.0/')
     # pickle_in = open("data/original_data.pickle", "rb")
 
-    train, dev, test = load_quantity_datasets('data/nli_data_052301.pickle')
-    # pickle_in = open("data/data_052301.pickle", "rb")
+    train, dev, test = load_quantity_datasets('data/nli_data_052801.pickle')
+    # pickle_in = open("data/data_052801.pickle", "rb")
     # train, dev, test = pickle.load(pickle_in)
 
-    glove = import_glove('data/snli_vectors_052301.txt')
+    glove = import_glove('data/snli_vectors_052801.txt')
 
     # glove = import_glove('data/original_snli_vectors.txt')
     load_word_vec('null', glove)
@@ -374,11 +374,11 @@ def main():
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == 'repackage':
-        repackage_glove('data/glove.6B.50d.txt', 'data/snli_vectors_052301.txt', 'data/nli_data_052301.pickle')
+        repackage_glove('data/glove.6B.50d.txt', 'data/snli_vectors_052801.txt', 'data/nli_data_052801.pickle')
     # elif len(sys.argv) > 1 and sys.argv[1] == 'store':
     #     # train, dev, test = load_all_snli_datasets('data/snli_1.0/')
     #     train, dev, test = load_quantity_datasets()
-    #     pickle_out = open("data/data_052301.pickle", "wb")
+    #     pickle_out = open("data/data_052801.pickle", "wb")
     #     pickle.dump([train, dev, test], pickle_out)
     #     pickle_out.close()
     else:
