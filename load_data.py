@@ -350,7 +350,7 @@ def main():
     # glove = import_glove('data/original_snli_vectors.txt')
     load_word_vec('null', glove)
 
-    prem_len = 25
+    prem_len = 20
     hypo_len = 15
 
     train = transform_dataset(train, prem_len, hypo_len)
