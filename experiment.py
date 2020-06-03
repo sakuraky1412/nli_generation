@@ -120,5 +120,17 @@ if __name__ == "__main__":
         gtrain = gm.gen_train(len(train[0]), g_hidden_size, latent_size, glove, hypo_len, version)
         gtrain.load_weights(dir_name + '/weights.hdf5')
         gtest = gm.gen_test(gtrain, glove, batch_size)
+        import visualize
+        result_file = open('nli_results.txt', 'w')
+        with open('data/self_written_but_not_trained_sentences.txt', 'r') as f:
+            sentences = f.readlines()
+            for i, sentence in enumerate(sentences):
+                premise = visualize.load_sentence(sentence, wi, prem_len)
+                explanation = visualize.get_explanation(premise, 1, gtest, 8, hypo_len, latent_size, wi)
+                result_file.write('%d. Sentence: % s' % (i + 1, sentence))
+                result_file.write('Explanation: ' + explanation + '\n\n')
+                result_file.write('1. To which degree is the explanation sentence grammatical?\n[]\n'
+                               '2. To which degree does the explanation sentence explain the logic behind the first sentence?\n[]\n'
+                               '3. To which degree does the explanation sentence contain irrelevant material?\n[]\n\n')
 
-            
+        result_file.close()

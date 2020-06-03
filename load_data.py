@@ -77,7 +77,7 @@ def repackage_glove(input_filename, output_filename, snli_path):
     train, dev, test = load_quantity_datasets(snli_path)
 
     tokens = all_tokens(train) | all_tokens(dev) | all_tokens(test)
-    glove = import_glove(input_filename, tokens)
+    glove = import_glove(input_filename, None)
     print "Glove imported"
     write_glove(output_filename, glove)
 
@@ -362,6 +362,13 @@ def main():
         load_word_vecs(ex[0] + ex[1], glove)
     load_word_vec('EOS', glove)
 
+    # pickle_in = open('data/test_senteces.pickle', "rb")
+    # test_sentences = pickle.load(pickle_in)
+    #
+    # new_glove = glove.copy()
+    # for test_sentence in test_sentences:
+    #     load_word_vecs(test_sentence, new_glove)
+    #
     wi = WordIndex(glove)
     print 'Word vec preparation finished'
 

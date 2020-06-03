@@ -41,6 +41,27 @@ def print_hypos(premise, label, gen_test, beam_size, hypo_len, noise_size, wi):
     for h in words:
         print wi.print_seq(h)
 
+
+def get_explanation(premise, label, gen_test, beam_size, hypo_len, noise_size, wi):
+    words = single_generate(premise, label, gen_test, beam_size, hypo_len, noise_size)
+    batch_size = gen_test[0].input_layers[0].input_shape[0]
+
+    per_batch = batch_size / beam_size
+    premises = [premise] * per_batch
+    noise_input = np.random.normal(scale=0.11, size=(per_batch, 1, noise_size))
+    class_indices = np.ones(per_batch) * label
+    class_indices = load_data.convert_to_one_hot(class_indices, 3)
+    words, loss = generative_predict_beam(gen_test, premises, noise_input,
+                                          class_indices, True, hypo_len)
+
+    # sentence = wi.print_seq(premise)
+    # print 'Label:', load_data.LABEL_LIST[label]
+    # print
+    explanation = ''
+    for h in words:
+        explanation = wi.print_seq(h)
+    return explanation.encode('utf-8')
+
 def load_sentence(string, wi, len = 25):
     tokens = string.split()
     tokens = load_word_indices(tokens, wi.index)
