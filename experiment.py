@@ -33,7 +33,11 @@ if __name__ == "__main__":
     epoch_size = (len(train[0]) / batch_size) * batch_size
     dev_sample_size = (len(dev[0]) / batch_size) * batch_size
 
-    dir_name = 'models/052901' + str(version) + '-' + str(g_hidden_size) + '-' + str(latent_size)
+    from datetime import datetime
+    now = datetime.now()
+    dt_string = now.strftime("%d%H%M")
+
+    dir_name = 'models/' + dt_string + str(version) + '-' + str(g_hidden_size) + '-' + str(latent_size)
     
     orig_cmodel_dir = 'models/cmodel/'
     cmodel = cm.attention_model(c_hidden_size, glove)
@@ -126,6 +130,7 @@ if __name__ == "__main__":
             sentences = f.readlines()
             for i, sentence in enumerate(sentences):
                 premise = visualize.load_sentence(sentence, wi, prem_len)
+                visualize.print_hypos(premise, 1, gtest, 8, hypo_len, latent_size, wi)
                 explanation = visualize.get_explanation(premise, 1, gtest, 8, hypo_len, latent_size, wi)
                 result_file.write('%d. Sentence: % s' % (i + 1, sentence))
                 result_file.write('Explanation: ' + explanation + '\n\n')
